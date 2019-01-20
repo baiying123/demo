@@ -1,41 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80810785-a852-4d10-89a4-ea5836a5ba38" name="Default" comment="用户注册登录提交">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/market/apps/user/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/market/templates/father/car.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/market/templates/father/goods_bse.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/market/templates/father/order_bse.html" afterDir="false" />
+    <list default="true" id="80810785-a852-4d10-89a4-ea5836a5ba38" name="Default" comment="第二次优化用户注册登录">
+      <change afterPath="$PROJECT_DIR$/market/car/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/car/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/car/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/car/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/car/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/car/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/car/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/goods/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/order/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/helper.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/migrations/0002_auto_20190120_0041.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/market/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/supermarket.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/supermarket.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/195a6e56-27c4-4093-a126-09c5bb311c9b.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/45432d04-119d-422a-b08a-7496b1e84f8b.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/4d2c8eec-ef59-4144-9b5b-d8cdf47fc5d0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/4f5f82ff-82cb-415b-bf8f-8492665369fe.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/195a6e56-27c4-4093-a126-09c5bb311c9b/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/33118943-3eb8-43fa-addf-6b8a894c812c.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/33118943-3eb8-43fa-addf-6b8a894c812c/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/45432d04-119d-422a-b08a-7496b1e84f8b/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/4d2c8eec-ef59-4144-9b5b-d8cdf47fc5d0/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/dataSources/4f5f82ff-82cb-415b-bf8f-8492665369fe/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/market.iml" beforeDir="false" afterPath="$PROJECT_DIR$/market/.idea/market.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/market/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/market/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/market/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/car/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/car/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/goods/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/market/market/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/market/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/goods/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/order/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/market/templates/father/user_bse.html" beforeDir="false" afterPath="$PROJECT_DIR$/market/templates/father/user_bse.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/market/templates/order/tureorder.html" beforeDir="false" afterPath="$PROJECT_DIR$/market/templates/order/tureorder.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/market/templates/user/address.html" beforeDir="false" afterPath="$PROJECT_DIR$/market/templates/user/address.html" afterDir="false" />
@@ -45,18 +63,7 @@
       <change beforePath="$PROJECT_DIR$/market/templates/user/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/market/templates/user/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/market/templates/user/member.html" beforeDir="false" afterPath="$PROJECT_DIR$/market/templates/user/member.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/market/templates/user/reg.html" beforeDir="false" afterPath="$PROJECT_DIR$/market/templates/user/reg.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/migrations/0002_auto_20190120_0041.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/migrations/0002_auto_20190120_0041.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/order/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/market/user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/market/apps/user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/新建文本文档.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -130,9 +137,9 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="-35" />
-    <option name="y" value="56" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="12" />
+    <option name="y" value="54" />
     <option name="width" value="1854" />
     <option name="height" value="942" />
   </component>
@@ -215,17 +222,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-35" y="56" width="1854" height="942" extended-state="1" />
-    <editor active="true" />
+    <frame x="12" y="54" width="1854" height="942" extended-state="0" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="7" visible="true" weight="0.13574097" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.7696139" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.229097" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24303234" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32998884" />
       <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.0942029" />
@@ -252,13 +258,31 @@
     <option name="LAST_COMMIT_MESSAGE" value="用户注册登录提交" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/market/market/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/market/market/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/market/market/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/market/apps/user/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="621">
           <caret line="47" column="21" selection-start-line="47" selection-start-column="21" selection-end-line="47" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -266,9 +290,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="6" column="28" lean-forward="true" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -314,11 +335,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/market/templates/father/order.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1485" />
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/market/templates/father/order.html" />
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/pycharm.jar!/resources/html5-schema/html5/phrase.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2079">
@@ -396,23 +413,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/market/market/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="16" column="8" selection-start-line="16" selection-end-line="16" selection-end-column="8" />
-          <folding>
-            <element signature="e#308#317#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/market/templates/father/user_bse.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="99">
           <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/新建文本文档.txt" />
+    <entry file="file://$PROJECT_DIR$/market/market/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="594">
+          <caret line="18" column="24" lean-forward="true" selection-start-line="18" selection-start-column="24" selection-end-line="18" selection-end-column="24" />
         </state>
       </provider>
     </entry>
