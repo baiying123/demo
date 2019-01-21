@@ -20,19 +20,22 @@
 	    <div style="height: 49px;"></div>
 {% endblock %}
 {% block content %}
+       <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+
 	    <ul class="safty1">
 	    	<li>
 	    		<a href="">
 	    			<i style="margin-top: 25px;">头像</i>
 	    			<div class="infor-pic">
-	    				<img src="images/infortx.png" />
+	    				<img src="{% static 'images/infortx.png' %}" />
 	    			</div>
 	    		</a>
 	    	</li>
 	    	<li>
 	    		<a href="">
 	    			<i>昵称</i>
-	    			<input class="infor-tele" placeholder="默契"/>
+	    			<input class="infor-tele"  name="phone" placeholder="默契"/>
 	    		</a>
 	    	</li>
 	    	<li>
@@ -72,6 +75,8 @@
 	    			<i>手机</i>
                     <input class="infor-tele" placeholder="13012345678"/>
 	    	</li>
+
+    </form>
 	    </ul>
 	    <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/amazeui.min.js' %}"></script>
