@@ -24,7 +24,7 @@
     <div style="height: 3rem;"></div>
 {% endblock  %}
 {% block content %}
-    <form action="" name="f" method="post">
+    <form action=""  method="post">
     {% csrf_token %}
     <input type="text" name="phone" placeholder="请输入手机号" class="login-name">
         <p class="am-text-danger">{{ form.errors.phone.0 }}</p>
@@ -36,7 +36,7 @@
         <input type="text" class="reg-yzm" placeholder="输入验证码"/>
         <input type="button" class="yzm-hq" value="获取验证码"/>
     </div>
-    <input type="submit" name="tj" class="login-btn" value="立即注册">
+    <input type="submit"  class="login-btn" value="立即注册">
     </form>
     <div class="agree">
         <input type="checkbox" name="checkbox" value="同意" checked="">&nbsp;同意
