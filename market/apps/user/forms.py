@@ -141,27 +141,27 @@ class PasswordModelForm(forms.Form):
         model = Users
         exclude = ['password', ]
 
-        def clean_password(self):  # 验证是否存在
-            password = self.cleaned_data.get('password')
-            flag = Users.objects.filter(password=password).exists()
-            if not flag:
-                # 在数据库中不存在 提示错误
-                raise forms.ValidationError("密码不存在")
+    def clean_password(self):  # 验证是否存在
+        password = self.cleaned_data.get('password')
+        flag = Users.objects.filter(password=password).exists()
+        if not flag:
+            # 在数据库中不存在 提示错误
+            raise forms.ValidationError("密码不存在")
 
-            # 返回单个字段 ,不用返回全部
-            return password
+        # 返回单个字段 ,不用返回全部
+        return password
 
-        # 验证密码是否一致
-        def clean(self):
-            # 判断两次密码是否一致
-            # 在清洗的数据中的到表单提交的数据,密码和确认密码
-            pwd = self.cleaned_data.get('newpassword')
-            repwd = self.cleaned_data.get('renewpassword')
-            if pwd and repwd and pwd != repwd:
-                # 在密码和确认密码,并且确认密码和密码不一样的时候,提示错误信息
-                raise forms.ValidationError({'renewpassword': "两次密码不一致"})
-            else:
-                return self.cleaned_data
+    # 验证密码是否一致
+    def clean(self):
+        # 判断两次密码是否一致
+        # 在清洗的数据中的到表单提交的数据,密码和确认密码
+        pwd = self.cleaned_data.get('newpassword')
+        repwd = self.cleaned_data.get('renewpassword')
+        if pwd and repwd and pwd != repwd:
+            # 在密码和确认密码,并且确认密码和密码不一样的时候,提示错误信息
+            raise forms.ValidationError({'renewpassword': "两次密码不一致"})
+        else:
+            return self.cleaned_data
 
 
 # 忘记密码

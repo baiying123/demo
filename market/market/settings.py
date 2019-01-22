@@ -134,3 +134,6 @@ CACHES = {
 #默认修改session的存储引擎
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+# 配置短信需要的key
+ACCESS_KEY_ID = "LTAI2qSiJdWP87em"
+ACCESS_KEY_SECRET = "FzORQ587PgGBoOAdmxzCjaxQi8klUi"

@@ -1,8 +1,8 @@
 {% extends 'father/user_bse.html' %}
-{% load static%}
+{% load static %}
 
 {% block title %}
-注册
+    注册
 {% endblock %}
 
 {% block header %}
@@ -22,27 +22,98 @@
         <img src="images/logo.png" />
     </div>-->
     <div style="height: 3rem;"></div>
-{% endblock  %}
+{% endblock %}
 {% block content %}
-    <form action=""  method="post">
-    {% csrf_token %}
-    <input type="text" name="phone" placeholder="请输入手机号" class="login-name">
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="phone" id="phone" placeholder="请输入手机号" class="login-name">
         <p class="am-text-danger">{{ form.errors.phone.0 }}</p>
-    <input type="password" name="password" placeholder="请输入密码" class="login-password">
+        <input type="password" name="password" placeholder="请输入密码" class="login-password">
         <p class="am-text-danger">{{ form.errors.password.0 }}</p>
-    <input type="password" name="repassword" placeholder="确认密码" class="login-name">
-        <p class="am-text-danger">{{ form.errors.repassword.0}}</p>
-    <div class="yzm" style="margin-top: 1.5rem;">...
-        <input type="text" class="reg-yzm" placeholder="输入验证码"/>
-        <input type="button" class="yzm-hq" value="获取验证码"/>
-    </div>
-    <input type="submit"  class="login-btn" value="立即注册">
+        <input type="password" name="repassword" placeholder="确认密码" class="login-name">
+        <p class="am-text-danger">{{ form.errors.repassword.0 }}</p>
+        <div class="yzm" style="margin-top: 1.5rem;">...
+            <input type="text" class="reg-yzm" placeholder="输入验证码"/>
+            <input type="button" class="yzm-hq"  value="获取验证码"/>
+        </div>
+        <<p class="am-text-danger">{{ form.errors.captcha.0 }}</p>
+        <input type="submit" class="login-btn" value="立即注册">
     </form>
     <div class="agree">
         <input type="checkbox" name="checkbox" value="同意" checked="">&nbsp;同意
         <a href="" class="xy">《用户协议》</a>
         <div class="r-login">已有账号，请<a href="login.html" class="l-login">登录</a></div>
+        <p class="am-text-warning">{{ form.errors.agree.0 }}</p>
     </div>
 
+{% endblock %}
+{% block footer_js %}
+    <script type="application/javascript">
+        {#   js代码网页加载完毕才能执行#}
+        $(function () {
+            {#1、绑定点击事件#}
+            {#    console.debug(111)#}
+            $('.yzm-hq').on('click', function () {
+                {#console.debug(111)#}
+                {#2、获取手机号码，手机号码上添加一个id#}
+                var phone = $('#phone').val();
+                var reg = /^1[3-9]\d{9}$/;
+                {#验证手机号码#}
+                if (!reg.test(phone)) {
+                    {#验证失败#}
+                    alert('手机号码格式错误！');
+                    return;
+
+                }
+                var self = this;
+                {#3、发送ajax请求#}
+                $.ajax({
+                    type: 'post',
+                    url: '{% url 'user:发送短信验证' %}',
+                    data: {'phone': phone, 'csrfmiddlewaretoken': '{{csrf_token}}'},
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.error == 0) {
+                            {#1.按钮颜色变灰#}
+                            $(self).css('background-color', 'gray')
+                            {#2按钮不能再点击#}
+                            $(self).prop('disabled', true);
+                            {#3开始倒计时,周期型执行函数#}
+
+                            var time = 60;
+                            var msg = time + '秒后重新发送';
+                            $(self).val(msg);
+                            var timer=window.setInterval(function () {
+                                time -= 1;
+                                if (time == 0) {
+                                    {#颜色变绿#}
+                                    $(self).css('background-color', '#76bb2a');
+                                    {#2按钮不能再点击#}
+                                    $(self).prop('disabled', false);
+                                    {#3返回原来的提示文字#}
+                                     $(self).val('获取验证码')
+                                    {#4清除定时#}
+                                    window.clearInterval(timer);
+                                    {#返回#}
+                                    return;
+                                }
+                                msg = time + '秒后重新发送';
+                                $(self).val(msg);
+
+
+                            }, 1000);
+
+
+                        } else {
+                            alert(data.errmsg)
+                        }
+                    }
+
+                })
+            })
+        })
+
+
+    </script>
 {% endblock %}
 
