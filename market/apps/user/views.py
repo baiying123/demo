@@ -82,7 +82,7 @@ class SendMsm(View):
 
         # 3 接入运营商
         __business_id = uuid.uuid1()
-        params = "{\"code\":\"%s\",\"product\":\"好嗨呀\"}" % random_code
+        params = "{\"code\":\"%s\",\"product\":\"！！！！\"}" % random_code
         # print(params)
         rs = send_sms(__business_id, phone, "注册验证", "SMS_2245271", params)
         print(rs.decode('utf-8'))
@@ -155,25 +155,40 @@ class MemberView(VerifyLoginView):  # 个人中心,基础验证是否登录的�
 
 class InforView(VerifyLoginView):  # 个人资料
     def get(self, request):
-        return render(request, 'user/infor.html')
+        id=request.session.get('id')
+        user=Users.objects.get(pk=id)
+        context = {
+            'user': user
+        }
+        return render(request, 'user/infor.html', context=context)
+
+        # @method_decorator(check_login)
 
     def post(self, request):
+        # 完成用户信息的注册
+        # 接收参数
+        # 渲染提交的数据
         data = request.POST
-        # 验证数据的合法性
-        form = InforModelForm(data)
-        if form.is_valid():
-            # 获取清洗后的数据
-            cleaned_data = form.cleaned_data
-            # 保存数据库
-            user = Users()
-            user.my_birthday = cleaned_data.get('my_birthday')
-            user.save()
-            # 合成响应跳转到个体中心
-            return redirect('user:个人中心')
-        else:
-            # 提示错误，重新登录
-            return render(request, 'user/infor.html', {'form': form})
+        user_id = request.session.get('ID')
+        user = Users.objects.filter(id=user_id)
+        # 验证表单参数合法性 用表单来验证
+        #  验证通过,先将头像保存到本地static/media下,在将头像地址返回
+        #  保存头像
 
+        # 保存提交个人信息
+        user.update(my_name=data['my_name'],
+                    sex=data['sex'],
+                    my_birthday=data['my_birthday'],
+                    school=data['school'],
+                    my_home=data['my_home'],
+                    address=data['address'])
+
+
+        # 错误信息提示
+        context = {
+            'user': user
+        }
+        return render(request, 'user/member.html', context=context)
 
 class SaftystepView(VerifyLoginView):  # 安全设置
     def get(self, request):

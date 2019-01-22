@@ -31,10 +31,20 @@ class RegisterModelForm(forms.Form):
                                    'min_length': '密码最小长度必须为8位',
                                    'max_length': '密码最大长度不能超过16位',
                                })
+
     # 确认密码
     repassword = forms.CharField(error_messages={
         'required': '确认密码必填',
 
+    })
+    # 验证码
+    captcha = forms.CharField(max_length=6,
+                              error_messages={
+                                  'required': "验证码必须填写"
+                              })
+
+    agree = forms.BooleanField(error_messages={
+        'required': '必须同意用户协议'
     })
 
     # 模型用的 Users
@@ -104,10 +114,55 @@ class LoginModelForm(forms.Form):
             raise forms.ValidationError({'password': '密码错误'})
         self.cleaned_data['user'] = user  # seesion返回整条记录
         return self.cleaned_data
+        # 综合校验
+        # 验证 用户传入的验证码和redis中的是否一样
+        # 用户传入的
+        try:
+            captcha = self.cleaned_data.get('captcha')
+            phone = self.cleaned_data.get('phone', '')
+            # 获取redis中的
+            r = get_redis_connection()
+            random_code = r.get(phone)  # 二进制, 转码
+            random_code = random_code.decode('utf-8')
+            # 比对
+            if captcha and captcha != random_code:
+                raise forms.ValidationError({"captcha": "验证码输入错误!"})
+        except:
+            raise forms.ValidationError({"captcha": "验证码输入错误!"})
+
+        # 返回清洗后的所有数据
+        return self.cleaned_data
 
 
 # 个人资料表单
 class InforModelForm(forms.Form):
+    # 用户昵称
+    my_name = forms.CharField(max_length=50,
+                              min_length=2,
+                              error_messages={
+                                  'min_length': '用户昵称最小长度必须为2位',
+                                  'max_length': '用户昵称最大长度不能超过50位',
+                              })
+
+    school = forms.CharField(max_length=50,
+                             error_messages={
+                                 'max_length': '学校最大长度不能超过50位'
+                             })
+    my_home = forms.CharField(max_length=50,
+                              error_messages={
+                                  'max_length': '用户详细地址位置最大长度不能超过50位'
+                              })
+    address = forms.CharField(max_length=50,
+                              error_messages={
+                                  'max_length': '用户的故乡最大长度不能超过50位'
+                              })
+    phone = forms.CharField(error_messages={
+        "required": "手机号必填",
+    },
+        validators=[
+            RegexValidator(r'^1[3-9]\d{9}$', "手机号码格式错误!")
+        ]
+    )
 
     def clean_my_birthday(self):
         # 获取当前日期
@@ -118,9 +173,32 @@ class InforModelForm(forms.Form):
             return forms.ValidationError('出生日期必须大于当前时间')
         return my_birthday
 
+        # 模型用的 Users
+
     class Meta:
         model = Users
-        fields = ['my_birthday', ]
+        fields = ['my_name', 'school', 'my_home', 'address', 'phone','my_birthday']
+        # 提示错误信息
+        error_messages = {
+            "my_name": {
+                'required': '用户昵称必须填写',
+                'max_length': '用户昵称长度不能大于50',
+                'min_length': '用户昵称最小长度必须为2位',
+            },
+            'school': {
+                'max_length': '学校最大长度不能超过50位'
+            },
+            'my_home': {
+                'max_length': '用户详细地址位置最大长度不能超过50位'
+            },
+            'address': {
+                'max_length': '用户的故乡最大长度不能超过50位'
+            },
+            'tel': {
+                'required': '手机号必须填写',
+                'max_length': '手机号长度不能大于11',
+            }
+        }
 
 
 # 修改密码
@@ -188,6 +266,7 @@ class ForgetpasswordModelForm(forms.Form):
         'required': '确认新密码必填',
 
     })
+
     class Meta:
         model = Users
         exclude = ['phone', 'password']
@@ -201,8 +280,6 @@ class ForgetpasswordModelForm(forms.Form):
 
         # 返回单个字段 ,不用返回全部
         return phone
-
-
 
     def clean(self):
         # 判断两次密码是否一致
