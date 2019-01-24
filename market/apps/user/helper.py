@@ -4,8 +4,6 @@ from aliyunsdkdysmsapi.request.v20170525 import SendSmsRequest
 from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.profile import region_provider
 
-
-
 import hashlib
 
 from market.settings import ACCESS_KEY_ID, ACCESS_KEY_SECRET
@@ -41,7 +39,9 @@ def login(request, user):  # 保存session的方法
 
     request.session['ID'] = user.pk
     request.session['phone'] = user.phone
+    request.session['head'] = user.head
     request.session.set_expiry(0)  # session存储时间，关闭浏览器就消失
+
 
 # 完成 定义一个方法 发送短消
 # 注意：不要更改
@@ -51,6 +51,7 @@ DOMAIN = "dysmsapi.aliyuncs.com"
 
 acs_client = AcsClient(ACCESS_KEY_ID, ACCESS_KEY_SECRET, REGION)
 region_provider.add_endpoint(PRODUCT_NAME, REGION, DOMAIN)
+
 
 def send_sms(business_id, phone_numbers, sign_name, template_code, template_param=None):
     smsRequest = SendSmsRequest.SendSmsRequest()

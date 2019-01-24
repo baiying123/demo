@@ -24,29 +24,37 @@
     <div style="height: 3rem;"></div>
 {% endblock %}
 {% block content %}
-    <form action="" method="post">
+        <form action="" method="post" class="form-horizontal">
         {% csrf_token %}
-        <input type="text" name="phone" id="phone" placeholder="请输入手机号" class="login-name">
+        <div style="height: 49px;"></div>
+        <!--<div class="login-logo">
+            <img src="images/logo.png" />
+        </div>-->
+        <div style="height: 3rem;"></div>
+        <input type="text" name="phone" id="phone" value="{{ request.POST.phone }}" placeholder="请输入手机号"
+               class="login-name">
         <p class="am-text-danger">{{ form.errors.phone.0 }}</p>
-        <input type="password" name="password" placeholder="请输入密码" class="login-password">
+        <input type="text" name="password" placeholder="请输入密码" class="login-password">
         <p class="am-text-danger">{{ form.errors.password.0 }}</p>
         <input type="password" name="repassword" placeholder="确认密码" class="login-name">
         <p class="am-text-danger">{{ form.errors.repassword.0 }}</p>
-        <div class="yzm" style="margin-top: 1.5rem;">...
-            <input type="text" class="reg-yzm" names=""placeholder="输入验证码"/>
-            <input type="button" name="captcha" class="yzm-hq"  value="获取验证码"/>
+        <div class="yzm" style="margin-top: 1.5rem;">
+            <input type="text" class="reg-yzm" name='captcha' placeholder="输入验证码"/>
+            <input type="button" class="yzm-hq" value="获取验证码"/>
         </div>
-        <<p class="am-text-danger">{{ form.errors.captcha.0 }}</p>
+        <p class="am-text-danger">{{ form.errors.captcha.0 }}</p>
         <input type="submit" class="login-btn" value="立即注册">
-    </form>
-    <div class="agree">
-        <input type="checkbox" name="checkbox" value="同意" checked="">&nbsp;同意
-        <a href="" class="xy">《用户协议》</a>
-        <div class="r-login">已有账号，请<a href="login.html" class="l-login">登录</a></div>
-        <p class="am-text-warning">{{ form.errors.agree.0 }}</p>
-    </div>
 
+        <div class="agree">
+            <input type="checkbox" name="agree" value="同意" checked="">&nbsp;同意
+            <a href="" class="xy">《用户协议》</a>
+            <div class="r-login">已有账号，请<a href="{% url 'user:登录' %}" class="l-login">登录</a></div>
+            <p class="am-text-warning">{{ form.errors.agree.0 }}</p>
+        </div>
+    </form>
 {% endblock %}
+
+
 {% block footer_js %}
     <script type="application/javascript">
         {#   js代码网页加载完毕才能执行#}

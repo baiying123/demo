@@ -1,11 +1,12 @@
 from django.conf.urls import url
+from django.views.generic import edit
 
-from goods.views import Category, Index, Detail
+from goods.views import DetailView, CategorView
 
 urlpatterns = [
-    url(r'^index/$',Index.as_view(),name="商品首页"),
-    url(r'^category/$',Category.as_view(),name="商品分类"),
-    url(r'^detail/$',Detail.as_view(),name="商品详情"),
+    url(r'^list/$', CategorView.as_view(), name='分类列表'),
+
+    url(r'^detail/(?P<id>\d+)$',DetailView.as_view(),name="商品详情"),
 
 
 ]

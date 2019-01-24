@@ -1,13 +1,27 @@
-{% extends 'father/user_bse.html' %}
-{% load static%}
+{% load static %}
 <!DOCTYPE html>
 <html>
-	{% block body %}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>超市</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
+		<link href="{% static 'css/amazeui.min.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+		<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+		<script src="{% static 'js/time.js' %}"></script>
+		<script src="{% static 'js/popup.mini.js' %}"></script>
+	</head>
 	<body>
 		<header data-am-widget="header" class="am-header am-header-default sq-head1">
 			<div class="am-header-left am-header-nav">
 		        <a href="city.html" class="" style="color: #fff;">
-			        <img src="images/city.png" />
+			        <img src="{% static 'images/city.png' %}" />
 			        <p style="font-size: 12px; margin-top: -35px;">南昌</p>
 			    </a>
 		   </div>
@@ -27,8 +41,8 @@
 <!--图片轮换-->
 <div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
   <ul class="am-slides">
-    <li><img src="images/banner.png" /></li>
-    <li><img src="images/banner.png" /></li>
+    <li><img src="{% static 'images/banner.png' %}" /></li>
+    <li><img src="{% static 'images/banner.png' %}" /></li>
   </ul>
 </div>
 <!--导航-->
@@ -36,7 +50,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="recharge.html" class="">
-              <img src="images/icon.png" />
+              <img src="{% static 'images/icon.png' %}" />
               <p>充值</p>
             </a>
         </div>
@@ -44,7 +58,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="javascript:;" class="index-qd">
-              <img src="images/icon1.png" />
+              <img src="{% static 'images/icon1.png' %}" />
               <p>签到</p>
             </a>
         </div>
@@ -52,7 +66,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="yhq.html" class="">
-              <img src="images/icon2.png" />
+              <img src="{% static 'images/icon2.png' %}" />
               <p>红包</p>
             </a>
         </div>
@@ -60,7 +74,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="" class="">
-              <img src="images/icon3.png" />
+              <img src="{% static 'images/icon3.png' %}" />
               <p>即将上线</p>
             </a>
         </div>
@@ -70,7 +84,7 @@
   	<li>
         <div class="am-gallery-item">
             <a href="speed.html" class="">
-              <img src="images/icon4.png" />
+              <img src="{% static 'images/icon4.png' %}" />
               <p>零食飞速</p>
             </a>
         </div>
@@ -78,26 +92,26 @@
       <li>
         <div class="am-gallery-item">
             <a href="category.html" class="">
-              <img src="images/icon5.png" />
+              <img src="{% static 'images/icon5.png' %}" />
               <p>超市</p>
             </a>
         </div>
       </li>
-
+      
   </ul>
   <div class="h-line"></div>
   <!--不规则展示-->
   <div class="index-product">
-  	<div class="index-pro-lf"><a href=""><img src="images/s1.png"/></a></div>
-  	<div class="index-pro-lr"><a href=""><img src="images/s2.png"/></a></div>
+  	<div class="index-pro-lf"><a href=""><img src="{% static 'images/s1.png' %}"/></a></div>
+  	<div class="index-pro-lr"><a href=""><img src="{% static 'images/s2.png' %}"/></a></div>
   </div>
   <div class="product-bot">
-  	<div class="product-bot-lf"><a href=""><img src="images/s3.png"/></a></div>
+  	<div class="product-bot-lf"><a href=""><img src="{% static 'images/s3.png' %}"/></a></div>
   	<div class="product-bot-lr">
-  		<div class="top"><a href=""><img src="images/s4.png"/></a></div>
+  		<div class="top"><a href=""><img src="{% static 'images/s4.png' %}"/></a></div>
   		<div class="bot">
-  			<div class="bot-lf"><a href=""><img src="images/s5.png"/></a></div>
-  			<div class="bot-lr"><a href=""><img src="images/s6.png"/></a></div>
+  			<div class="bot-lf"><a href=""><img src="{% static 'images/s5.png' %}"/></a></div>
+  			<div class="bot-lr"><a href=""><img src="{% static 'images/s6.png' %}"/></a></div>
   		</div>
   	</div>
   </div>
@@ -105,14 +119,14 @@
   <div class="h-line"></div>
   <!-- 特色专区-->
   <div class="sq-title">
- 	<img src="images/ts.png" width="26"/>
+ 	<img src="{% static 'images/ts.png' %}" width="26"/>
  	特色专区
   </div>
   <ul data-am-widget="gallery" class="am-gallery pro-list am-avg-sm-2 am-avg-md-2 am-avg-lg-4 am-gallery-default"  >
       <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test.png" />
+              <img src=" {% static 'images/test.png' %}" />
                 <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
                 <div class="am-gallery-desc">￥52</div>
             </a>
@@ -121,7 +135,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test1.png" />
+              <img src="{% static 'images/test1.png' %}" />
                 <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
                 <div class="am-gallery-desc">￥39</div>
             </a>
@@ -130,7 +144,7 @@
         <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test2.png" />
+              <img src="{% static 'images/test2.png' %}" />
                 <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
                 <div class="am-gallery-desc">￥45.8</div>
             </a>
@@ -139,7 +153,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test21.png" />
+              <img src=" {% static 'images/test21.png' %}" />
                 <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
                 <div class="am-gallery-desc">￥45.8</div>
             </a>
@@ -148,7 +162,7 @@
        <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test.png" />
+              <img src=" {% static 'images/test.png' %}" />
                 <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
                 <div class="am-gallery-desc">￥52</div>
             </a>
@@ -157,7 +171,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test1.png" />
+              <img src="{% static ' images/test1.png' %}" />
                 <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
                 <div class="am-gallery-desc">￥39</div>
             </a>
@@ -166,7 +180,7 @@
         <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test2.png" />
+              <img src=" {% static 'images/test2.png' %}" />
                 <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
                 <div class="am-gallery-desc">￥45.8</div>
             </a>
@@ -175,7 +189,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="detail.html" class="">
-              <img src=" images/test21.png" />
+              <img src=" {% static 'images/test21.png' %}" />
                 <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
                 <div class="am-gallery-desc">￥45.8</div>
             </a>
@@ -189,7 +203,7 @@
 			<div class="popup-close"><i class="iconfont">&#xe602</i></div>
 	</div>
 	<div class="dq-text">
-		<img src="images/qiandao.png" width="40" />&nbsp; 您已连续签到3天
+		<img src="{% static 'images/qiandao.png' %}" width="40" />&nbsp; 您已连续签到3天
 	</div>
 </div>
 <!--签到-->
@@ -197,7 +211,7 @@
  <!--底部-->
  <div style="height: 55px;"></div>
  <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
-      <ul class="am-navbar-nav am-cf am-avg-sm-5">
+      <ul class="am-navbar-nav am-cf am-avg-sm-5">   
           <li>
             <a href="index.html" class="curr">
                 <span class="am-icon-home"></span>
@@ -222,7 +236,7 @@
                 <span class="am-navbar-label">订单</span>
             </a>
           </li>
-
+ 
           <li>
             <a href="member.html" class="">
                 <span class="am-icon-user"></span>
@@ -231,19 +245,43 @@
           </li>
       </ul>
 </div>
-
-
-
-
+ 
+ 
+ 
+ 
  <script type='text/javascript'>
 	(function(){
 		 new PopUp_api({el:'.index-qd',html:'.qd-box'});
 	})()
 </script>
-
+ 
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/amazeui.min.js' %}"></script>
 	</body>
-	{% endblock %}
+ <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.12&key=feecd338d9aea6126578a541315e20bc"></script>
+    <script type="text/javascript">
 
+        //获取用户所在城市信息
+        function showCityInfo() {
+            //实例化城市查询类
+            var citysearch = new AMap.CitySearch();
+            //自动获取用户IP，返回当前城市
+            citysearch.getLocalCity(function (status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    if (result && result.city && result.bounds) {
+                        var cityinfo = result.city;
+                        var citybounds = result.bounds;
+                        document.getElementById('info').innerHTML = cityinfo;
+                        //地图显示当前城市
+                        map.setBounds(citybounds);
+                    }
+                } else {
+                    document.getElementById('info').innerHTML = result.info;
+                }
+            });
+        }
+
+        showCityInfo();
+    </script>
 </html>

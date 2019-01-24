@@ -20,23 +20,27 @@
 	    <div style="height: 49px;"></div>
 {% endblock %}
 {% block content %}
-       <form action="" method="post" class="form-horizontal">
+       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
 	    <ul class="safty1">
 	    	<li>
-	    		<a href="">
+
 	    			<i style="margin-top: 25px;">头像</i>
 	    			<div class="infor-pic">
-	    				<img src="{% static 'images/infortx.png' %}" />
+	    				<img src="{{ MEDIA_URL }}{{ user.head }}" />
 	    			</div>
-	    		</a>
+
 	    	</li>
+
 	    	<li>
-	    		<a href="">
+              <li>
+                    <input type="file" name="head">
+              </li>
+
 	    			<i>昵称</i>
-	    			<input class="infor-tele"  name="phone" placeholder="默契"/>
-	    		</a>
+	    			<input class="infor-tele"  name="my_name" value="{{ user.my_name|default:'' }}"placeholder="默认"/>
+
 	    	</li>
 	    	<li>
 	    		<a href="">
@@ -51,9 +55,9 @@
 	    			</i>
 	    		</a>
 	    	</li><li>
-	    		<a href="">
+
 	    			<i>生日</i>
-                    <input class="infor-tele" placeholder="出生日期"/>
+                    <input class="infor-tele"  type="date" name="my_birthday" placeholder="出生日期"/>
 	    		</a>
 	    	</li>
 	    </ul>
@@ -61,23 +65,25 @@
 	     <ul class="safty1">
 	    	<li>
 	    			<i>学校</i>
-	    			<input class="infor-tele" placeholder="就读于哪个学校"/>
+	    			<input class="infor-tele" name="school" placeholder="就读于哪个学校"/>
 	    	</li>
 	    	<li>
 	    			<i>位置</i>
-	    			<input class="infor-tele" placeholder="详细地址"/>
+	    			<input class="infor-tele"  name="my_home" placeholder="详细地址"/>
 	    	</li>
 	    	<li>
 	    			<i>故乡</i>
-                    <input class="infor-tele" placeholder="来自哪里"/>
+                    <input class="infor-tele"  name="address" placeholder="来自哪里"/>
 	    	</li>
 	    	<li>
 	    			<i>手机</i>
-                    <input class="infor-tele" placeholder="13012345678"/>
+                    <input class="infor-tele" name="phone" placeholder="13012345678"/>
 	    	</li>
 
-    </form>
+
 	    </ul>
+       <input class="am-btn am-btn-warning am-round am-text-default" type="submit" name="tj" value="提交">
+    </form>
 	    <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/amazeui.min.js' %}"></script>
 

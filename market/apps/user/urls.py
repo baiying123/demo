@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^infor/$', InforView.as_view(), name="个人资料"),
     url(r'^saftystep/$', SaftystepView.as_view(), name="安全设置"),
     url(r'^password/$', PasswordView.as_view(), name="修改密码"),
-    url(r'^forgetpassword/$', ForgetpasswordView.as_view(), name="修改密码"),
+    url(r'^forgetpassword/$', ForgetpasswordView.as_view(), name="忘记密码"),
     url(r'^sendMsm/$',SendMsm.as_view(), name="发送短信验证"),
 
 ]
