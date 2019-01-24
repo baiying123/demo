@@ -25,7 +25,7 @@ class Users(BaseModel):
     # add_time=models.DateField(auto_now_add=True)#添加时间
     # update_time=models.DateField(auto_now=True)#修改时间
     # 用户头像从setting文件直接找到静态文件的储存路径
-    #use_img = models.ImageField(upload_to='user_img', verbose_name='用户头像')
+    head = models.ImageField(upload_to="head/%Y%m", default="head/memtx.png", verbose_name="用户头像")
     def __str__(self):
         return self.phone
 
