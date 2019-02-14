@@ -16,14 +16,20 @@
 		<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
 		<script src="{% static 'js/time.js' %}"></script>
 		<style>
-			.shop-list-mid .tit a{color: #909090;
-    font-size: 1.4rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: normal;
-    text-overflow: ellipsis;}
+			.shop-list-mid .tit a{
+                color: #909090;
+                font-size: 1.4rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                white-space: normal;
+                text-overflow: ellipsis;}
+            .list-price {
+                background: url({% if order == 2 %}{% static 'images/order-bot.png' %}{% elif order == 3 %}{% static 'images/order-top.png' %}{% else %}{% static 'images/order.png' %}{% endif %}) no-repeat right center;
+                padding-right: 20px;
+                font-style: normal;
+        }
 		</style>
 	</head>
 	<body>
@@ -33,149 +39,94 @@
 					<i class="am-icon-chevron-left"></i>
 				</a>
 			</div>
+            <form action="{% url 'search:haystack_search' %}" method="get">
 		    <div class="cate-search">
-		    	<input type="text" class="cate-input" placeholder="请输入您要的搜索的产品关键词" />
-		    	<input type="button" class="cate-btn" />
+		    	<input type="text"  name="q" class="cate-input" placeholder="请输入您要的搜索的产品关键词" />
+		    	<input type="submit" class="cate-btn" />
 	        </div>
+            </form>
 	    </header>
 	    <div style="height: 49px;"></div>
 	    <ul class="list-nav">
-	    	<li class="current"><a href="">综合</a></li>
-	    	<li><a href="">销量</a></li>
-	    	<li><a href=""><i class="list-price">价格</i></li>
-	    	<li><a href="">新品</a></li>
-	    </ul>
+            <li {% if order == 0 %}class="current"{% endif %}><a href="{% url 'goods:分类列表' cate_id 0 %}">综合</a></li>
+            <li {% if order == 1 %}class="current"{% endif %}><a href="{% url 'goods:分类列表' cate_id 1 %}">销量</a></li>
+            <li {% if order == 2 or order == 3 %}class="current"{% endif %}><a id="price"  href="{% url 'goods:分类列表' cate_id 2 %}"><i class="list-price">价格</i></a></li>
+            <li {% if order == 4 %}class="current"{% endif %}><a href="{% url 'goods:分类列表' cate_id 4 %}">新品</a></li>
+        </ul>
 	    <div class="content-list">
 	    	<div class="list-left">
                 {% for category in categorys %}
-                <li class="current"><a href="">{{ category.cate_name }}</a></li>
+                <li {% if cate_id == category.pk %}class="current"{% endif %}>
+                    <a href="{% url 'goods:分类列表' category.pk order %}">{{ category.sort_name }}</a>
+                </li>
                 {% endfor %}
 	    	</div>
-	    	<div class="list-right">
-	    		<ul class="list-pro">
-                {% for goods_sku in goods_skus %}
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
+        <div class="list-right">
+        <ul class="list-pro">
+
+            {% for goods_sku in goods_skus %}
+            <li>
+                <a href="{% url 'goods:商品详情' goods_sku.pk %}"><img src="{{ MEDIA_URL }}{{ goods_sku.logo }}" class="list-pic"/></a>
+                <div class="shop-list-mid" style="width: 65%;">
+                    <div class="tit">
+                        <a href="{% url 'goods:商品详情' goods_sku.pk %}">
+                            {{ goods_sku.goods_spu.spu_name }}&emsp;{{ goods_sku.sku_name }}
+                        </a>
+                    </div>
+                    <div class="am-gallery-desc">￥{{goods_sku.price}}</div>
+                    <p>销量：{{goods_sku.sale_num}}件</p>
                 </div>
                 <div class="list-cart">
 	                <div class="d-stock ">
 			                <a class="decrease">-</a>
-			                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
+			                <input sku_id="{{ goods_sku.pk }}" id="num" readonly="" class="text_box" name="" type="text" value="0">
 			                <a class="increase">+</a>
 	                </div>
                 </div>
                 <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
 	    	</li>
              {% endfor %}
+
+
+
+
+
+                {% for goods_sku in goods_skus %}
 	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
+	    		<a href="{% url 'goods:商品详情' goods_sku.pk %}"><img src="{{ MEDIA_URL }}{{ goods_sku.logo }} " class="list-pic" /></a>
 	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
+                	<div class="tit"><a href="{% url 'goods:商品详情' goods_sku.pk %}">{{ goods_sku.goods_spu.spu_name }}&emsp;{{ goods_sku.sku_name }}</a></div>
+                	<div class="am-gallery-desc">￥{{goods_sku.price}}</div>
+                	<p>销量：{{goods_sku.sale_num}}件</p>
                 </div>
                 <div class="list-cart">
                 <div class="d-stock ">
 		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
+		                <input sku_id="{{ goods_sku.pk }}"id="num" readonly="" class="text_box" name="" type="text" value="0">
 		                <a class="increase">+</a>
                 </div>
+
                 </div>
+
                 <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
 	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src="{% static ' images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-                <div class="list-cart">
-                <div class="d-stock ">
-		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-		                <a class="increase">+</a>
-                </div>
-                </div>
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-                <div class="list-cart">
-                <div class="d-stock ">
-		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-		                <a class="increase">+</a>
-                </div>
-                </div>
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-                <div class="list-cart">
-                <div class="d-stock ">
-		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-		                <a class="increase">+</a>
-                </div>
-                </div>
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-                <div class="list-cart">
-                <div class="d-stock ">
-		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-		                <a class="increase">+</a>
-                </div>
-                </div>
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	<li>
-	    		<a href="detail.html"><img src=" {% static 'images/test10.png' %}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<div class="am-gallery-desc">￥52</div>
-                	<p>销量：5件</p>
-                </div>
-                <div class="list-cart">
-                <div class="d-stock ">
-		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-		                <a class="increase">+</a>
-                </div>
-                </div>
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-	    	
+                {% empty %}
+                  <li>
+                            <a href="{% url 'goods:分类列表' '' '' %}">该分类下商品走丢了~~~~</a>
+                    </li>
+	    	    {% endfor %}
 	    </ul>
 	    	</div>
 	    </div>
-	    
+
 	    <!--底部-->
  <div style="height: 55px;"></div>
  <div class="fix-bot">
-	   	  <div class="fix-bot-cart"><i>8</i></div>
+        <a href="{% url 'car:购物车展示' %}">
+            <div class="fix-bot-cart">
+                <i id="car_count">{{ car_count }}</i>
+            </div>
+        </a>
 	   	  <a href="tureorder.html" class="list-js">去结算</a>
 	   	  <a href="tureorder.html" class="list-jsk">一键快购</a>
 	   	  <!--<div class="js-text">
@@ -183,43 +134,108 @@
             	<p class="js-car">购物满50元免运费</p>
           </div>-->
  </div>
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/amazeui.min.js' %}"></script>
 <script>
 //购物数量加减
-$(function(){
-		$('.increase').click(function(){
-			var self = $(this);
-			var current_num = parseInt(self.siblings('input').val());
-			current_num += 1;
-			if(current_num > 0){
-				self.siblings(".decrease").fadeIn();
-				self.siblings(".text_box").fadeIn();
-			}
-			self.siblings('input').val(current_num);
-			update_item(self.siblings('input').data('item-id'));
-		})		
-		$('.decrease').click(function(){
-			var self = $(this);
-			var current_num = parseInt(self.siblings('input').val());
-			if(current_num > 0){
-				current_num -= 1;
-                if(current_num < 1){
-	                self.fadeOut();
-					self.siblings(".text_box").fadeOut();
-                }
-				self.siblings('input').val(current_num);
-				update_item(self.siblings('input').data('item-id'));
-			}
-		})
-	})
+        $(function () {
+            $('.increase').click(function () {
+                var self = $(this);
+                var current_num = parseInt(self.siblings('input').val());
+                //完成ajax请求
+                // 准备数据
+                //sku_id 在input 上添加一个自定义属性 sku_id=1
+                //找到input获取自定义的属性值
+                var sku_id = self.siblings('input').attr('sku_id');
+                var data = {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'count': 1,
+                    'sku_id': sku_id
+                };
+                $.ajax({
+                    type: "post",
+                    url: "{% url 'car:添加购物车' %}",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.code == 0) {
+                            //添加成功
+                            current_num += 1;
+                            if (current_num > 0) {
+                                self.siblings(".decrease").fadeIn();
+                                self.siblings(".text_box").fadeIn();
+                            }
+                            self.siblings('input').val(current_num);
+                            //修改总数
+                            $("#cart_count").text(data.data);
+                        } else if (data.code == 1) {
+                            //未登录陆,跳转到登录页面
+                            if (confirm("没有登录,是否立即登录?")) {
+                                location.href = "{% url 'user:登录' %}"
+                            }
+                        } else {
+                            alert(data.errmsg);
+                        }
+                    }
+                });
+            });
+            $('.decrease').click(function () {
+                var self = $(this);
+                var current_num = parseInt(self.siblings('input').val());
+                //完成ajax请求
+                // 准备数据
+                //sku_id 在input 上添加一个自定义属性 sku_id=1
+                //找到input获取自定义的属性值
+                var sku_id = self.siblings('input').attr('sku_id');
+                var data = {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'count': -1,
+                    'sku_id': sku_id
+                };
+                $.ajax({
+                    type: "post",
+                    url: "{% url 'car:添加购物车' %}",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.code == 0) {
+                            //添加成功
+                            current_num -= 1;
+                            if (current_num < 1) {
+                                self.fadeOut();
+                                self.siblings(".text_box").fadeOut();
+                            }
+                            self.siblings('input').val(current_num);
+                            //修改总数
+                            $("#cart_count").text(data.data);
+                        } else if (data.code == 1) {
+                            //未登录陆,跳转到登录页面
+                            if (confirm("没有登录,是否立即登录?")) {
+                                location.href = "{% url 'user:登录' %}"
+                            }
+                        } else {
+                            alert(data.errmsg);
+                        }
+                    }
+                });
+            });
+        });
+        $(function () {
+            // 修改 标签上的地址值
+            {% if order == 2 %}
+                $("#price").attr('href', '{% url "goods:商品列表" cate_id 3 %}');
+            {% elif order == 3 %}
+                $("#price").attr('href', '{% url "goods:商品列表" cate_id 2 %}');
+            {% endif %}
+        });
+    </script>
 
-</script>
+
 	</body>
 </html>

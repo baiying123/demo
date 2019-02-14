@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 from db.base_model import BaseModel
+from django.conf import settings
 
 is_on_sale_choices = (
     (False, "下架"),
@@ -84,6 +85,12 @@ class GoodsSKU(BaseModel):
     logo = models.ImageField(verbose_name='封面图片',
                              upload_to='goods/%Y%m/%d'
                              )
+
+    def show_logo(self):
+        return "<img style='width:100px' src='{}{}'/>".format(settings.MEDIA_URL, self.logo)
+
+    show_logo.short_description = "LOGO"
+    show_logo.allow_tags = True
 
     is_on_sale = models.BooleanField(verbose_name="是否上架",
                                      choices=is_on_sale_choices,

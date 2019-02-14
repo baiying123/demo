@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>超市</title>
+		<ttle>超市</ttle>
         <meta name="description" content="">
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -22,13 +22,13 @@
 			<div class="am-header-left am-header-nav">
 		        <a href="city.html" class="" style="color: #fff;">
 			        <img src="{% static 'images/city.png' %}" />
-			        <p style="font-size: 12px; margin-top: -35px;">南昌</p>
+			        <p style="font-size: 12px; margin-top: -35px;"id="info">全国</p>
 			    </a>
 		   </div>
 			<h1 class="am-header-title1">
 		        <div class="search-box">
-		           <a href="village.html" class="index-search">南昌大学前湖校区∨</a>
-		         <!--  <input type="submit" value="" class="search-icon" /> -->
+		           <a href="{% url 'search:haystack_search' %}" class="index-search">苹果手机</a>
+
 		        </div>
 		    </h1>
 			<div class="am-header-right am-header-nav">
@@ -42,7 +42,7 @@
 <div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
   <ul class="am-slides">
     <li><img src="{% static 'images/banner.png' %}" /></li>
-    <li><img src="{% static 'images/banner.png' %}" /></li>
+
   </ul>
 </div>
 <!--导航-->
@@ -91,7 +91,7 @@
       </li>
       <li>
         <div class="am-gallery-item">
-            <a href="category.html" class="">
+            <a href="{% url 'goods:分类列表' a.pk 0  %}" class="">
               <img src="{% static 'images/icon5.png' %}" />
               <p>超市</p>
             </a>
@@ -141,60 +141,7 @@
             </a>
         </div>
       </li>
-        <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src="{% static 'images/test2.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test21.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
-        </div>
-      </li>
-       <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test.png' %}" />
-                <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
-                <div class="am-gallery-desc">￥52</div>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src="{% static ' images/test1.png' %}" />
-                <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
-                <div class="am-gallery-desc">￥39</div>
-            </a>
-        </div>
-      </li>
-        <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test2.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test21.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
-        </div>
-      </li>
+
   </ul>
 <!--签到-->
 <div class="qd-box">
@@ -219,26 +166,26 @@
             </a>
           </li>
           <li>
-            <a href="message.html" class="">
+            <a href="#" class="">
                 <span class="am-icon-comments"></span>
                 <span class="am-navbar-label">动态</span>
             </a>
           </li>
           <li>
-            <a href="shopcart.html" class="">
+            <a href="{% url 'car:购物车展示' %}" class="">
                 <span class="am-icon-shopping-cart"></span>
                 <span class="am-navbar-label">购物车</span>
             </a>
           </li>
           <li>
-            <a href="allorder.html" class="">
+            <a href="{% url 'order:确认订单' %}" class="">
                 <span class="am-icon-file-text"></span>
                 <span class="am-navbar-label">订单</span>
             </a>
           </li>
  
           <li>
-            <a href="member.html" class="">
+            <a href="{% url 'user:个人中心' %}" class="">
                 <span class="am-icon-user"></span>
                 <span class="am-navbar-label">我的</span>
             </a>
@@ -281,7 +228,6 @@
                 }
             });
         }
-
         showCityInfo();
     </script>
 </html>

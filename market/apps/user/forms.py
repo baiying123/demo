@@ -6,7 +6,7 @@ from django.core.validators import RegexValidator
 from django import forms
 
 from user.helper import set_password
-from user.models import Users
+from user.models import Users, UserAddress
 
 
 # 注册表单
@@ -203,6 +203,13 @@ class InforModelForm(forms.Form):
 
 # 修改密码
 class PasswordModelForm(forms.Form):
+    password = forms.CharField(max_length=16,
+                               min_length=8,
+                               error_messages={
+                                   'required': '请填写密码!',
+                                   'min_length': '请输入至少八个字符!',
+                                   'max_length': '请输入小于或等于十六个字符!'
+                               })
     newpassword = forms.CharField(max_length=16,
                                   min_length=8,
                                   error_messages={
@@ -210,24 +217,19 @@ class PasswordModelForm(forms.Form):
                                       'min_length': '密码最小长度必须为8位',
                                       'max_length': '密码最大长度不能超过16位',
                                   })
-    renewpassword = forms.CharField(error_messages={
-        'required': '确认新密码必填',
-
-    })
+    renewpassword = forms.CharField(max_length=16,
+                                  min_length=8,
+                                  error_messages={
+                                      'required': '必须填写密码',
+                                      'min_length': '密码最小长度必须为8位',
+                                      'max_length': '密码最大长度不能超过16位',
+                                  })
 
     class Meta:
         model = Users
-        exclude = ['password', ]
 
-    def clean_password(self):  # 验证是否存在
-        password = self.cleaned_data.get('password')
-        flag = Users.objects.filter(password=password).exists()
-        if not flag:
-            # 在数据库中不存在 提示错误
-            raise forms.ValidationError("密码不存在")
 
-        # 返回单个字段 ,不用返回全部
-        return password
+
 
     # 验证密码是否一致
     def clean(self):
@@ -262,11 +264,18 @@ class ForgetpasswordModelForm(forms.Form):
                                       'min_length': '密码最小长度必须为8位',
                                       'max_length': '密码最大长度不能超过16位',
                                   })
-    renewpassword = forms.CharField(error_messages={
-        'required': '确认新密码必填',
-
-    })
-
+    renewpassword = forms.CharField(max_length=16,
+                                  min_length=8,
+                                  error_messages={
+                                      'required': '必填',
+                                      'min_length': '密码最小长度必须为8位',
+                                      'max_length': '密码最大长度不能超过16位',
+                                  })
+    # 验证码
+    captcha = forms.CharField(max_length=6,
+                              error_messages={
+                                  'required': "验证码必须填写!"
+                              })
     class Meta:
         model = Users
         exclude = ['phone', 'password']
@@ -291,3 +300,38 @@ class ForgetpasswordModelForm(forms.Form):
             raise forms.ValidationError({'repassword': "两次密码不一致"})
         else:
             return self.cleaned_data
+
+#用户添加收货地址的表单"
+class AddressAddForm(forms.ModelForm):
+    """用户添加收货地址的表单"""
+    class Meta:
+        model = UserAddress
+        exclude = ['create_time', 'update_time', 'is_delete','user']
+        error_messages = {
+            'username': {
+                'required': "请填写用户名！",
+            },
+            'phone': {
+                'required': "请填写手机号码！",
+            },
+            'brief': {
+                'required': "请填写详细地址！",
+            },
+            'harea': {
+                'required': "请填写完整地址！",
+            },
+        }
+
+    def clean(self):
+        # 验证如果数据库里地址已经超过6六表报错
+        cleaned_data = self.cleaned_data
+        count = UserAddress.objects.filter(user_id=self.data.get("user_id")).count()
+        if count >= 6:
+            raise forms.ValidationError({"harea":"收货地址最多只能保存6条"})
+
+        #操作默认值
+        # 如果当前是默认地址,其他 就设置为False
+        if cleaned_data.get('isDefault'):
+            UserAddress.objects.filter(user_id=self.data.get("user_id")).update(isDefault=False)
+
+        return cleaned_data

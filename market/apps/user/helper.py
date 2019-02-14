@@ -1,4 +1,5 @@
 from django.conf.global_settings import SECRET_KEY
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from aliyunsdkdysmsapi.request.v20170525 import SendSmsRequest
 from aliyunsdkcore.client import AcsClient
@@ -6,6 +7,7 @@ from aliyunsdkcore.profile import region_provider
 
 import hashlib
 
+from car.helper import json_msg
 from market.settings import ACCESS_KEY_ID, ACCESS_KEY_SECRET
 
 
@@ -23,10 +25,23 @@ def set_password(password):
 # 将验证登录的方法写成装饰器
 def check_login(func):  # 登录验证装饰器，传原函数
     def new_login(request, *args, **kwargs):
-        # 验证session中是否有登录标识
-        if request.session.get('ID') is None:  # 没有
-            # 跳转到登录
-            return redirect('user:登录')
+        #验证session中是否有登录标识
+        if request.session.get("ID")is None:
+            # 将上个请求地址保存到session
+            referer = request.META.get('HTTP_REFERER', None)
+            if referer:
+                request.session['referer'] = referer
+
+            # 判断 是否为ajax请求
+            #判断是否为ajax请求
+            #跳转到登录页面
+            if request.is_ajax():
+                return JsonResponse(json_msg(1,'未登录'))
+            else:
+                #跳转到登录
+                return redirect('user:登录')
+
+
         else:
             # 调用原函数
             return func(request, *args, **kwargs)

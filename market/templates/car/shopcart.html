@@ -1,8 +1,20 @@
-{% extends 'father/user_bse.html' %}
 {% load static%}
 <!DOCTYPE html>
 <html>
-	{% block body %}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>购物车</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
+		<link href="{% static 'css/amazeui.min.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+		<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+	</head>
 	<body>
 		<header data-am-widget="header" class="am-header am-header-default sq-head ">
 			<div class="am-header-left am-header-nav">
@@ -15,87 +27,64 @@
             </h1>
 	    </header>
 	    <div style="height: 49px;"></div>
-	    <!--购物车空的状态-->
-	    <div class="login-logo">
-	    	<img src="images/care.png">
-	    	<p>亲、您的购物车还是空空的哦，快去装满它!</p>
-	    	<a href="index.html" class="goshopping">前去逛逛</a>
-	    </div>
-	    <ul class="shopcart-list">
-	    	<li>
-	    		<label class="am-checkbox am-warning">
-                 <input type="checkbox" checked="checked" value="" data-am-ucheck checked>
-                </label>
-                <a href="detail.html"><img src="images/test3.png" class="shop-pic" /></a>
-                <div class="shop-list-mid">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<b class="shop-list-price">￥169 </b>
-                </div>
-                <div class="list-cart1">
-	                <div class="d-stock">
-			                <a class="decrease">-</a>
-			                <input id="num" readonly="" class="text_box" name="" type="text" value="1">
-			                <a class="increase">+</a>
-	                </div>
-                </div>
+        <form method="get" action="{% url 'order:确认订单' %}">
 
-	    	</li>
-	    	<li>
-	    		<label class="am-checkbox am-warning">
-                 <input type="checkbox" checked="checked" value="" data-am-ucheck checked>
-                </label>
-                <a href="detail.html"><img src="images/test3.png" class="shop-pic" /></a>
-                <div class="shop-list-mid">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<b class="shop-list-price">￥169 </b>
-                </div>
-                <div class="list-cart1">
-	                <div class="d-stock">
-			                <a class="decrease">-</a>
-			                <input id="num" readonly="" class="text_box" name="" type="text" value="1">
-			                <a class="increase">+</a>
-	                </div>
-                </div>
+        {% if goods_skus %}
 
-	    	</li>
-	    	<li>
-	    		<label class="am-checkbox am-warning">
-                 <input type="checkbox" checked="checked" value="" data-am-ucheck checked>
-                </label>
-                <a href="detail.html"><img src="images/test3.png" class="shop-pic" /></a>
-                <div class="shop-list-mid">
-                	<div class="tit"><a href="detail.html">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</a></div>
-                	<b class="shop-list-price">￥169 </b>
-                </div>
-                <div class="list-cart1">
-	                <div class="d-stock">
-			                <a class="decrease">-</a>
-			                <input id="num" readonly="" class="text_box" name="" type="text" value="1">
-			                <a class="increase">+</a>
-	                </div>
-                </div>
+             <ul class="shopcart-list">
+                {% for goods_sku in goods_skus %}
+                    <li>
+                    <label class="am-checkbox am-warning">
+                        <input type="checkbox" name="sku_ids" checked="checked" value="{{ goods_sku.pk }}" data-am-ucheck checked>
+                    </label>
+                    <a href="{% url 'goods:商品详情' goods_sku.pk %}"><img src="{{ MEDIA_URL }}{{ goods_sku.logo }}" class="shop-pic"/></a>
+                    <div class="shop-list-mid">
+                        <div class="tit">
+                            <a href="{% url 'goods:商品详情' goods_sku.pk %}">
+                                {{ goods_sku.goods_spu.spu_name }}&emsp;{{ goods_sku.sku_name }}
+                            </a>
+                        </div>
+                        <b class="shop-list-price">￥<i>{{ goods_sku.price }}</i></b>
+                    </div>
+                    <div class="list-cart1">
+                        <div class="d-stock">
+                            <a class="decrease">-</a>
+                            <input id="num"  sku_id="{{ goods_sku.pk }}" readonly="" class="text_box" name="" type="text" value="{{ goods_sku.count }}">
+                            <a class="increase">+</a>
+                        </div>
+                    </div>
 
-	    	</li>
-	    	<div style="height: 10px; background: #eee;"></div>
-	    </ul>
+                    </li>
+                 {% endfor %}
+                 <div style="height: 10px; background: #eee;"></div>
+                </ul>
+
+        {% endif %}
+        <!--购物车空的状态-->
+        <div class="login-logo cart_logo" style="{% if goods_skus|length != 0 %}display:none{% endif %}">
+            <img src="{% static 'images/care.png' %}">
+            <p>亲、您的购物车还是空空的哦，快去装满它!</p>
+            <a href="{% url 'goods:首页' %}" class="goshopping">前去逛逛</a>
+        </div>
+
 
 	    <div class="shop-fix">
-
+	    	
 	    	<label class="am-checkbox am-warning">
                <input type="checkbox" checked="checked" value="" data-am-ucheck checked>
             </label>
             <a class="del">全选</a>
-            <a href="tureorder.html" class="js-btn">去结算</a>
+            <input type="button"  class="js-btn" value="去结算">
             <div class="js-text">
-            	<P>合计：<b>￥217.80</b></P>
+            	<P>合计：<b>￥<i id="total_price">0.00</i></b></P>
             	<p class="js-car">免费配送</p>
             </div>
 	    </div>
-
+        </form>
 <!--底部-->
  <div style="height: 55px;"></div>
  <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
-      <ul class="am-navbar-nav am-cf am-avg-sm-5">
+      <ul class="am-navbar-nav am-cf am-avg-sm-5">   
           <li>
             <a href="index.html" class="">
                 <span class="am-icon-home"></span>
@@ -120,7 +109,7 @@
                 <span class="am-navbar-label">订单</span>
             </a>
           </li>
-
+ 
           <li>
             <a href="member.html" class="curr">
                 <span class="am-icon-user"></span>
@@ -129,33 +118,157 @@
           </li>
       </ul>
 </div>
+ 
+ 
+ 
+ <script>
+        //购物数量加减
+        $(function () {
+            $('.increase').click(function () {
+                var self = $(this);
+                var current_num = parseInt(self.siblings('input').val());
+
+                //完成ajax请求
+                // 准备数据
+                //sku_id 在input 上添加一个自定义属性 sku_id=1
+                //找到input获取自定义的属性值
+                var sku_id = self.siblings('input').attr('sku_id');
+                var data = {
+                    'csrfmiddlewaretoken':'{{ csrf_token }}',
+                    'count':1,
+                    'sku_id':sku_id
+                };
+                $.ajax({
+                    type:"post",
+                    url:"{% url 'car:添加购物车' %}",
+                    data:data,
+                    dataType:"json",
+                    success: function (data) {
+                        if (data.code == 0){
+                            //添加成功
+                            current_num += 1;
+                            self.siblings('input').val(current_num);
+
+                            jisuanTotalPrice();
+                        }else if(data.code == 1){
+                            //未登录陆,跳转到登录页面
+                            if(confirm("没有登录,是否立即登录?")){
+                                location.href = "{% url 'user:登录' %}"
+                            }
+                        }else {
+                            alert(data.errmsg);
+                        }
+                    }
+                });
 
 
+            })
+            $('.decrease').click(function () {
+                var self = $(this);
+                var current_num = parseInt(self.siblings('input').val());
 
-<script>
-	//购物数量加减
-	$(function(){
-		$('.increase').click(function(){
-			var self = $(this);
-			var current_num = parseInt(self.siblings('input').val());
-			current_num += 1;
-			self.siblings('input').val(current_num);
-			update_item(self.siblings('input').data('item-id'));
-		})
-		$('.decrease').click(function(){
-			var self = $(this);
-			var current_num = parseInt(self.siblings('input').val());
-			if(current_num > 1){
-				current_num -= 1;
-				self.siblings('input').val(current_num);
-				update_item(self.siblings('input').data('item-id'));
-			}
-		})
-	})
-</script>
-<script src="js/jquery.min.js"></script>
-<script src="js/amazeui.min.js"></script>
+
+                //完成ajax请求
+                // 准备数据
+                //sku_id 在input 上添加一个自定义属性 sku_id=1
+                //找到input获取自定义的属性值
+                var sku_id = self.siblings('input').attr('sku_id');
+                var data = {
+                    'csrfmiddlewaretoken':'{{ csrf_token }}',
+                    'count':-1,
+                    'sku_id':sku_id
+                };
+                $.ajax({
+                    type:"post",
+                    url:"{% url 'car:添加购物车' %}",
+                    data:data,
+                    dataType:"json",
+                    success: function (data) {
+                        if (data.code == 0){
+                            //添加成功
+                            if (current_num > 1) {
+                                current_num -= 1;
+                                self.siblings('input').val(current_num);
+                            } else {
+                                //删除当前li
+                                self.closest('li').remove();
+                                //判断是否有li
+                                if ($(".shopcart-list").find('li').length == 0){
+                                    $(".cart_logo").show();
+                                }
+                            }
+                            jisuanTotalPrice();
+                        }else if(data.code == 1){
+                            //未登录陆,跳转到登录页面
+                            if(confirm("没有登录,是否立即登录?")){
+                                location.href = "{% url 'user:登录' %}"
+                            }
+                        } else {
+                            alert(data.errmsg);
+                        }
+                    }
+                });
+            })
+
+            //计算总价格
+            function jisuanTotalPrice() {
+                //1. 获取所有被选中的复选框 (获取 shopcart-list ul 里面的被选中的复选框  :checked)
+                var checkboxes = $('.shopcart-list').find(":checked");
+                //2. 获取对应的li
+                var total_price = 0;
+                $.each(checkboxes,function (i,e) {
+                    //i 索引  e元素(复选框)
+                    var li = $(e).closest('li');
+                    //获取价格
+                    var price = $(li).find('.shop-list-price i').text();
+                    //获取数量
+                    var count = $(li).find(".sku_count").val();
+                    total_price += price * count;
+                });
+                //3. 从li里面查找价格和数量
+                //4. 计算总价格
+                {#console.debug(total_price);#}
+                $("#total_price").text(total_price.toFixed(2));
+            }
+            //调用
+            jisuanTotalPrice();
+
+            //处理全选
+            $("#check_all").on("change",function () {
+                //获取当前复选框是否被选中的状态 checked 属性的值
+                {#console.debug($(this).attr('checked'));#}
+                {#console.debug($(this).prop('checked'));#}
+                var status = $(this).prop('checked');
+                //其他li中复选框与当前复选框状态一致
+                $(".shopcart-list").find(":checkbox").prop('checked',status);
+                //计算价格
+                jisuanTotalPrice();
+            });
+
+            //在所有的li中的复选框绑定change时间
+            $(".shopcart-list").find(":checkbox").on("change",function () {
+                //重新计算价格
+                jisuanTotalPrice();
+                //判断 选中的复选框 与 所有的复选框的 长度一致 就是全选
+                if( $(".shopcart-list").find(":checkbox").length == $(".shopcart-list").find(":checked").length){
+                    $("#check_all").prop('checked',true);
+                }else {
+                    $("#check_all").prop('checked',false);
+                }
+            });
+
+            //点击结算按钮,判断必须勾选商品
+            $(".js-btn").on("click",function () {
+                if($(".shopcart-list").find(":checked").length == 0){
+                    alert("请选择需要结算的商品!");
+                }else {
+                    //通过js提交表单 $('form').serialize()
+                    $('form').submit();
+                }
+            })
+        })
+ </script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/amazeui.min.js' %}"></script>
 	</body>
-	{% endblock %}
-
 </html>

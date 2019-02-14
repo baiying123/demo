@@ -1,0 +1,51 @@
+{% extends 'father/user_bse.html' %}
+{% load static %}
+{% block title %}
+    收货地址列表
+{% endblock %}
+
+
+{% block header %}
+    <header data-am-widget="header" class="am-header am-header-default sq-head ">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.back()" class="">
+                <i class="am-icon-chevron-left"></i>
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="" class="">管理收货地址</a>
+        </h1>
+        <div class="am-header-right am-header-nav">
+            <a href="{% url 'user:收货地址添加' %}" class="">
+                <i class="am-icon-plus"></i>
+            </a>
+        </div>
+    </header>
+    <div style="height: 49px;"></div>
+{% endblock %}
+
+{% block content %}
+    <ul class="address-list">
+        {% for address in addresses %}
+            <li {% if addresses.isDefault %}class="curr"{% endif %}>
+                <p>收货人：{{address.username}}&nbsp;&nbsp;{{address.phone}}</p>
+                <p class="order-add1">收货地址：
+                    {{ addresses.hcity }}{{ addresses.hproper }}{{ addresses.harea }}{{ addresses.bridf }}
+                </p>
+                <hr/>
+                <div class="address-cz">
+                    <label class="am-radio am-warning">
+                        <input type="radio" name="isDefault" value="" data-am-ucheck
+                               {% if addresses.isDefault %}
+                                    checked="checked"
+                               {% endif %}
+
+                        > 设为默认
+                    </label>
+                    <a href=""><img src="{% static 'images/bj.png' %}" width="18"/>&nbsp;编辑</a>
+                    <a href="">删除</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

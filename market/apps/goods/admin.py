@@ -45,9 +45,11 @@ class GalleryInline(admin.TabularInline):
 
 @admin.register(GoodsSKU)
 class GoodsSkuAdmin(admin.ModelAdmin):
-    list_display = ["id", 'sku_name', 'price', 'unit', 'Store', 'sale_num', 'is_on_sale', 'category']
+    list_display = ["id", 'sku_name','show_logo', 'price', 'unit', 'Store', 'sale_num', 'is_on_sale', 'category']
     list_display_links = ["id", 'sku_name', 'price']
+    list_editable = ['is_on_sale']
 
+    readonly_fields = ['show_logo']
     search_fields = ['sku_name', 'price', 'sale_num']
     inlines = [
         GalleryInline,

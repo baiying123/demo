@@ -5,21 +5,24 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from market.settings import SECRET_KEY
 from django.utils.decorators import method_decorator
 
 from django.views import View
 from django_redis import get_redis_connection
 
+from car.helper import json_msg
 from db.base_view import VerifyLoginView
 
-from user.forms import RegisterModelForm, LoginModelForm, PasswordModelForm, ForgetpasswordModelForm,InforModelForm
+from user.forms import RegisterModelForm, LoginModelForm, PasswordModelForm, ForgetpasswordModelForm, InforModelForm, \
+    AddressAddForm
 from user.helper import set_password, login, send_sms, check_login
 
-from user.models import Users
+from user.models import Users, UserAddress
 import re
 
-
-class RegisterView(View):  # 注册
+# 注册
+class RegisterView(View):
     def get(self, request):
         # 展示登录表单
         return render(request, 'user/reg.html')
@@ -42,7 +45,7 @@ class RegisterView(View):  # 注册
         else:
             return render(request, 'user/reg.html', context={'form': form})
 
-
+#发送短信验证
 class SendMsm(View):
     def get(self, request):
         pass
@@ -92,8 +95,8 @@ class SendMsm(View):
         # 3. 合成响应
         return JsonResponse({'error': 0})
 
-
-class LoginView(View):  # 登录
+ # 登录
+class LoginView(View):
     def get(self, request):
         return render(request, 'user/login.html')
 
@@ -108,14 +111,21 @@ class LoginView(View):  # 登录
             # 保存登录标识到session中，单独创建一个方法保存，更新个人资料
             user = form.cleaned_data.get('user')
             login(request, user)  # 保存session
+            referer = request.session.get('referer')
+            if referer:
+                # 跳转回去
+                # 删除session
+                del request.session['referer']
+                return redirect(referer)
+            else:
             # 合成响应跳转到个体中心
-            return redirect('user:个人中心')
+                return redirect('user:个人中心')
         else:
             # 提示错误，重新登录
             return render(request, 'user/login.html', {'form': form})
 
-
-class ForgetpasswordView(VerifyLoginView):  # 忘记密码
+# 忘记密码
+class ForgetpasswordView(View):
     def get(self, request):
         return render(request, 'user/forgetpassword.html')
 
@@ -127,18 +137,26 @@ class ForgetpasswordView(VerifyLoginView):  # 忘记密码
         form = ForgetpasswordModelForm(data)
         if form.is_valid():
             # 获取清洗后的数据
-            cleaned_data = form.cleaned_data
-            # 保存数据库
-            phone = form.cleaned_data.get('phone')
-            password = form.cleaned_data.get('password')
-            password = set_password(password)
-            Users.objects.filter(phone=phone).update(password=password)
-            return redirect('user:忘记密码')
+            cleaned = form.cleaned_data
+            # 将密码进行加密
+            # 通过id查询数据
+            user_id = request.session.get('ID')
+            # 取出清洗后的手机号
+            phone = cleaned.get('phone')
+            # 取出清洗后的密码
+            newpassword= set_password(cleaned.get('newpassword'))
+            # 修改到数据库
+            # 验证原密码是否存在,不能用get,用filter
+            if Users.objects.filter(phone=phone, id=user_id).exists():
+                # 更新密码
+                Users.objects.filter(id=user_id).update(password=newpassword)
+                # 跳转到登录页
+                return redirect('user:登录')
         else:
             return render(request, 'user/forgetpassword.html', context={'form': form})
 
-
-class MemberView(VerifyLoginView):  # 个人中心,基础验证是否登录的视图
+ # 个人中心,基础验证是否登录的视图
+class MemberView(VerifyLoginView):
 
     def get(self, request):
         return render(request, 'user/member.html')
@@ -147,11 +165,9 @@ class MemberView(VerifyLoginView):  # 个人中心,基础验证是否登录的�
         pass
 
 
-# @check_login
-# def xxx(request):#视图函数
-#     pass
 
-class InforView(VerifyLoginView):  # 个人资料
+# 个人资料
+class InforView(VerifyLoginView):
     def get(self, request):
         # 获取session中的用户id
         user_id = request.session.get('ID')
@@ -162,7 +178,7 @@ class InforView(VerifyLoginView):  # 个人资料
         }
         return render(request, 'user/infor.html', context=context)
 
-    @method_decorator(check_login)
+
     def post(self, request):
         # 完成用户信息的更新
         # 接收参数
@@ -173,6 +189,11 @@ class InforView(VerifyLoginView):  # 个人资料
         # 操作数据
         user = Users.objects.get(pk=user_id)
         user.my_name = data.get('my_name')
+        user.sex = data.get('sex')
+        user.birthday = data.get('birthday')
+        user.school = data.get('school')
+        user.my_home = data.get('my_home')
+        user.address = data.get('address')
         if head is not None:
             user.head = head
         user.save()
@@ -181,39 +202,81 @@ class InforView(VerifyLoginView):  # 个人资料
         # 合成响应
         return redirect('user:个人中心')
 
-
-class SaftystepView(VerifyLoginView):  # 安全设置
+# 安全设置
+class SaftystepView(VerifyLoginView):
     def get(self, request):
         return render(request, 'user/saftystep.html')
 
     def post(self, request):
         pass
 
-
-class PasswordView(VerifyLoginView):  # 修改密码
+# 修改密码
+class PasswordView(VerifyLoginView):
     def get(self, request):
         return render(request, 'user/password.html')
 
     def post(self, request):
+        # 接收参数
         data = request.POST
-
-        # 验证数据的合法性
         form = PasswordModelForm(data)
-
+        # 验证数据的合法性
         if form.is_valid():
             # 获取清洗后的数据
-            cleaned_data = form.cleaned_data
-            # 保存数据库
-            user = Users()
-            user.newpassword = cleaned_data.get('newpassword')
-            user.save()
-            user = form.cleaned_data.get('user')
-            login(request, user)  # 保存session
+            cleaned = form.cleaned_data
+            # 取出清洗后的密码
+            # 将密码进行加密
+            password = set_password(cleaned.get('password'))
+            # 通过id查询数据
+            user_id = request.session.get('ID')
+            # print(user_id)
+            # 修改到数据库
+            # 验证原密码是否存在,不能用get,用filter
+            if Users.objects.filter(id=user_id, password=password).exists():
+                newpassword = set_password(cleaned.get('newpassword'))
+                # 更新密码
+                Users.objects.filter(id=user_id).update(password=newpassword)
+                # 跳转到登录页
+                return redirect('user:登录')
 
-            # 保存session
 
-            # 合成响应跳转到个体中心
-            return redirect('user:安全设置')
         else:
             # 提示错误
             return render(request, 'user/password.html', {'form': form})
+#收货地址
+class Address(VerifyLoginView):
+
+
+    def get(self, request):
+        return render(request, 'user/address.html')
+
+    def post(self, request):
+        # 接收参数
+        data = request.POST.dict()  # 强制转换成字典
+
+        # 字典保存用户
+        data['user_id'] = request.session.get("ID")  # form自动转换功能
+
+        # 验证参数
+        form = AddressAddForm(data)
+        if form.is_valid():
+            form.instance.user = Users.objects.get(pk=data['user_id'])
+            form.save()
+            return JsonResponse(json_msg(0,"添加成功"))
+        else:
+            return JsonResponse(json_msg(1,"添加失败",data=form.errors))
+
+
+class AddressList(VerifyLoginView):
+    """收货地址列表"""
+
+    def get(self, request):
+        # 获取用户的收货地址
+        user_id = request.session.get("ID")
+        user_addresses = UserAddress.objects.filter(user_id=user_id,is_delete=False).order_by("-isDefault")
+
+
+        # 渲染数据
+        context = {
+            'addresses':user_addresses
+        }
+        return render(request, 'user/address_list.html',context=context)

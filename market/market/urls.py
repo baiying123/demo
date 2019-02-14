@@ -16,11 +16,17 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from goods.views import IndexView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # 用户模块
     url(r'^ckeditor/', include("ckeditor_uploader.urls")),
-
+    # 全文搜索框架
+    url(r'^search/', include('haystack.urls', namespace='search')),
     url(r'^user/',include('user.urls',namespace='user')),
     url(r'^goods/',include('goods.urls',namespace='goods')),
+    url(r'^$', IndexView.as_view()),
+    url(r'^car/', include('car.urls', namespace='car')),
+    url(r'^order/', include('order.urls', namespace='order')),
 ]
